@@ -3,8 +3,14 @@ import {
   PageTemplate,
   AmsFormUpload,
 } from '../../components'
+import type { DailyFYCData } from '../../entities/daily_fyc'
+import type { DailyFYP } from '../../entities/daily_fyp'
 function MainPage() {
   // const [count, setCount] = useState(0)
+
+  const handleSubmit = (dailyFYC: DailyFYCData, dailyFYP: DailyFYP[]) => {
+    console.log(dailyFYC, dailyFYP)
+  }
 
   return (
     <PageTemplate>
@@ -14,7 +20,9 @@ function MainPage() {
           Upload AIA report CSV files and get instant insights into your team's performance. Streamline your weekly reporting process with automated data processing and visualization.
         </p>
       </div>
-      <AmsFormUpload />
+      <AmsFormUpload
+        onSubmit={handleSubmit}
+      />
     </PageTemplate>
   )
 }

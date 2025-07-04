@@ -1,16 +1,16 @@
 const ContainerHeader = ({
   title = "Header",
-  description,
+  children,
 }: {
   title?: string
-  description?: string
+  children?: React.ReactNode
 }) => {
   return (
-    <div>
+    <div className="flex justify-between items-center">
       <h2 className="mb-2 align-baseline text-left">
         {title}
       </h2>
-      <p>{description}</p>
+      {children}
     </div>
   )
 }
