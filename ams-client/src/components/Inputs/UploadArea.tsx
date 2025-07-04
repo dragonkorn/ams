@@ -21,9 +21,23 @@ const UploadArea = ({
       reader.onabort = () => console.log('file reading was aborted')
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = () => {
-        // Do whatever you want with the file contents
         const binaryStr = reader.result
         console.log(binaryStr)
+        // Try different encodings for Thai language support
+        let csv = ''
+        try {
+          // Try Windows-874 (Thai encoding)
+          csv = new TextDecoder('windows-874').decode(binaryStr as ArrayBuffer)
+        } catch (error) {
+          try {
+            // Try ISO-8859-11 (Thai encoding)
+            csv = new TextDecoder('iso-8859-11').decode(binaryStr as ArrayBuffer)
+          } catch (error) {
+            // Fallback to UTF-8 with replacement character
+            csv = new TextDecoder('utf-8', { fatal: false }).decode(binaryStr as ArrayBuffer)
+          }
+        }
+        console.log(csv)
       }
       reader.readAsArrayBuffer(file)
     })
