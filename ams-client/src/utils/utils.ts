@@ -3,7 +3,7 @@
  * @param file - The CSV file to convert
  * @returns A promise that resolves to the CSV string
  */
-export const CsvToString = (file: File) => {
+export const CsvToString = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
 
@@ -34,4 +34,8 @@ export const CsvToString = (file: File) => {
     }
     reader.readAsArrayBuffer(file)
   })
+}
+
+export const Sleep = (ms: number) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
 }
