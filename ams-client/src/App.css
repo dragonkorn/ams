@@ -1,8 +1,9 @@
+@import "tailwindcss";
+
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  background-color: rgb(226, 232, 240);
+  color: #000000;
 }
 
 .logo {
@@ -33,10 +34,39 @@
   }
 }
 
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000000;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: var(--text-sm) /* 0.875rem = 14px */;
+  line-height: var(--tw-leading, var(--text-sm--line-height) /* calc(1.25 / 0.875) ≈ 1.4286 */);
+}
+
+
+
 .card {
   padding: 2em;
 }
 
 .read-the-docs {
-  color: #888;
+  color: #000000;
 }
