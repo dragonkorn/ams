@@ -1,26 +1,39 @@
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import UploadArea from "../Inputs/UploadArea"
 import ContainerHeader from "../Labels/ContainerHeader"
 import Container from "../Layouts/Container"
 import { parseDailyFYCFromCSV, type DailyFYCData } from "../../entities/daily_fyc"
 import { CsvToString } from "../../utils/utils"
 import { parseDailyFYPFromCSV, type DailyFYP } from "../../entities/daily_fyp"
+import { parseDailyCaseFromCSV, type DailyCase } from "../../entities/daily_case"
 
 const AmsFormUpload = ({
   onSubmit = () => { },
 }: {
-  onSubmit?: (dailyFYC: DailyFYCData, dailyFYP: DailyFYP[]) => void
+  onSubmit?: (
+    dailyFYC: DailyFYCData,
+    dailyFYCLife: DailyFYCData,
+    dailyFYP: DailyFYP[],
+    dailyCase: DailyCase[],
+  ) => void
 }) => {
 
   const [dailyFYCFile, setDailyFYCFile] = useState<File | null>(null)
+  const [dailyFYCLifeFile, setDailyFYCLifeFile] = useState<File | null>(null)
   const [dailyFYPFile, setDailyFYPFile] = useState<File | null>(null)
+  const [dailyCaseFile, setDailyCaseFile] = useState<File | null>(null)
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     // verify dailyFYCFile and dailyFYPFile are not null
-    if (!dailyFYCFile || !dailyFYPFile) {
-      alert('Please upload both daily FYC and daily FYP files')
+    if (!dailyFYCFile || !dailyFYCLifeFile || !dailyFYPFile || !dailyCaseFile) {
+      const missingFiles = []
+      if (!dailyFYCFile) missingFiles.push('Daily FYC')
+      if (!dailyFYCLifeFile) missingFiles.push('Daily FYC (only Life)')
+      if (!dailyFYPFile) missingFiles.push('Daily FYP')
+      if (!dailyCaseFile) missingFiles.push('Daily Case')
+      alert(`Please upload all required files: ${missingFiles.join(', ')}`)
       return
     }
 
@@ -29,13 +42,19 @@ const AmsFormUpload = ({
     if (typeof onSubmit === 'function') {
       Promise.all([
         CsvToString(dailyFYCFile),
+        CsvToString(dailyFYCLifeFile),
         CsvToString(dailyFYPFile),
-      ]).then(([dailyFYCData, dailyFYPData]) => {
+        CsvToString(dailyCaseFile)
+      ]).then(([dailyFYCData, dailyFYCLifeData, dailyFYPData, dailyCaseData]) => {
         const dailyFYCDataParsed = parseDailyFYCFromCSV(dailyFYCData)
+        const dailyFYCLifeDataParsed = parseDailyFYCFromCSV(dailyFYCLifeData)
         const dailyFYPDataParsed = parseDailyFYPFromCSV(dailyFYPData)
+        const dailyCaseDataParsed = parseDailyCaseFromCSV(dailyCaseData)
         onSubmit(
           dailyFYCDataParsed,
-          dailyFYPDataParsed
+          dailyFYCLifeDataParsed,
+          dailyFYPDataParsed,
+          dailyCaseDataParsed,
         )
       }).catch((error) => {
         console.error(error)
@@ -46,7 +65,7 @@ const AmsFormUpload = ({
 
       return
     }
-  }
+  }, [dailyFYCFile, dailyFYCLifeFile, dailyFYPFile, dailyCaseFile])
 
   return (
     <Container>
@@ -72,14 +91,22 @@ const AmsFormUpload = ({
         />
         <UploadArea
           className="w-full md:w-1/2"
+          title="Upload Daily FYC (only Life) File"
+          onUpload={(file) => setDailyFYCLifeFile(file)}
+        />
+      </div>
+      <div className="flex flex-col md:flex-row gap-4">
+        <UploadArea
+          className="w-full md:w-1/2"
+          title="Upload Daily Case File"
+          onUpload={(file) => setDailyCaseFile(file)}
+        />
+        <UploadArea
+          className="w-full md:w-1/2"
           title="Upload Daily FYP File"
           onUpload={(file) => setDailyFYPFile(file)}
         />
       </div>
-      {/* <div className="flex flex-col md:flex-row gap-4">
-        <UploadArea className="w-full md:w-1/2" title="Upload Daily FYP File" />
-        <UploadArea className="w-full md:w-1/2" title="Upload Daily FYP File" />
-      </div> */}
     </Container>
   )
 }

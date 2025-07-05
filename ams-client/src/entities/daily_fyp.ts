@@ -1,3 +1,5 @@
+import { parseCSVLine, parseNumber } from "../utils/utils";
+
 export interface DailyFYP {
   // Agent information
   agentId: string;
@@ -35,29 +37,6 @@ export const parseDailyFYPFromCSV = (csvData: string): DailyFYP[] => {
 
   const agents: DailyFYP[] = [];
 
-  // Helper function to parse CSV line with proper quote handling
-  const parseCSVLine = (line: string): string[] => {
-    const result: string[] = [];
-    let current = '';
-    let inQuotes = false;
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i];
-
-      if (char === '"') {
-        inQuotes = !inQuotes;
-      } else if (char === ',' && !inQuotes) {
-        result.push(current.trim());
-        current = '';
-      } else {
-        current += char;
-      }
-    }
-
-    result.push(current.trim());
-    return result;
-  };
-
   // Skip header lines and process agent data
   for (let i = 2; i < lines.length; i++) {
     const line = lines[i];
@@ -69,8 +48,6 @@ export const parseDailyFYPFromCSV = (csvData: string): DailyFYP[] => {
     const agentInfo = columns[0].split(':');
     const agentId = agentInfo[0].trim();
     const fullname = agentInfo[1] ? agentInfo[1].trim() : '';
-
-    const parseNumber = (val: string) => Number(val.replace(/[^\d.-]+/g, ''));
 
     const agent: DailyFYP = {
       agentId,

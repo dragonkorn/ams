@@ -1,15 +1,43 @@
+import { useMemo, useState } from 'react'
 import '../../App.css'
 import {
   PageTemplate,
   AmsFormUpload,
+  AgentReport,
 } from '../../components'
+import type { DailyCase } from '../../entities/daily_case'
 import type { DailyFYCData } from '../../entities/daily_fyc'
 import type { DailyFYP } from '../../entities/daily_fyp'
+import { constructAgentReports } from '../../entities/agent_report_entity'
 function MainPage() {
-  // const [count, setCount] = useState(0)
 
-  const handleSubmit = (dailyFYC: DailyFYCData, dailyFYP: DailyFYP[]) => {
-    console.log(dailyFYC, dailyFYP)
+  const [dailyFYC, setDailyFYC] = useState<DailyFYCData | null>(null)
+  const [dailyFYCLife, setDailyFYCLife] = useState<DailyFYCData | null>(null)
+  const [dailyFYP, setDailyFYP] = useState<DailyFYP[]>([])
+  const [dailyCase, setDailyCase] = useState<DailyCase[]>([])
+  const agentReports = useMemo(() => {
+    if (!dailyFYC || !dailyFYCLife || !dailyFYP || !dailyCase) {
+      console.log('no data')
+      return []
+    }
+    console.log('constructing agent reports for ', { dailyFYC, dailyFYCLife, dailyFYP, dailyCase })
+    const res = constructAgentReports(dailyFYC, dailyFYCLife, dailyFYP, dailyCase)
+    console.log('agent reports: ', res)
+    return res
+  }, [dailyFYC, dailyFYCLife, dailyFYP, dailyCase])
+
+
+  const handleSubmit = (
+    dailyFYC: DailyFYCData,
+    dailyFYCLife: DailyFYCData,
+    dailyFYP: DailyFYP[],
+    dailyCase: DailyCase[],
+  ) => {
+    console.log(dailyFYC, dailyFYCLife, dailyFYP, dailyCase, 'dailyFYC, dailyFYCLife, dailyFYP, dailyCase')
+    setDailyFYC(dailyFYC)
+    setDailyFYCLife(dailyFYCLife)
+    setDailyFYP(dailyFYP)
+    setDailyCase(dailyCase)
   }
 
   return (
@@ -23,32 +51,16 @@ function MainPage() {
       <AmsFormUpload
         onSubmit={handleSubmit}
       />
+
+      <div className="h-8" />
+
+      <AgentReport
+        agentReports={agentReports}
+      />
+      <div className="h-40" />
     </PageTemplate>
   )
 }
 
 
 export default MainPage
-
-/**
- * <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
- */
