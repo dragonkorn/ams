@@ -1,14 +1,14 @@
 import { useMemo, useState } from 'react'
-import '../../App.css'
+import '../../../App.css'
 import {
   PageTemplate,
   AmsFormUpload,
   AgentReport,
-} from '../../components'
-import type { DailyCase } from '../../entities/daily_case'
-import type { DailyFYCData } from '../../entities/daily_fyc'
-import type { DailyFYP } from '../../entities/daily_fyp'
-import { constructAgentReports, type AmsReportEntity } from '../../entities/agent_report_entity'
+} from '../../../components'
+import type { DailyCase } from '../../../entities/daily_case'
+import type { DailyFYCData } from '../../../entities/daily_fyc'
+import type { DailyFYP } from '../../../entities/daily_fyp'
+import { constructAgentReports, type AmsReportEntity } from '../../../entities/agent_report_entity'
 
 function UploadFormPage() {
 

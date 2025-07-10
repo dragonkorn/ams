@@ -4,7 +4,7 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from "react-router";
 // import App from './App.tsx'
 import { MainPage } from './pages'
-import UploadFormPage from './modules/report_creator/UploadFormPage'
+import UploadFormPage from './modules/report_creator/pages/UploadFormPage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
