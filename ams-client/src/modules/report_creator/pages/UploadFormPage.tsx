@@ -9,8 +9,13 @@ import type { DailyCase } from '../../../entities/daily_case'
 import type { DailyFYCData } from '../../../entities/daily_fyc'
 import type { DailyFYP } from '../../../entities/daily_fyp'
 import { constructAgentReports, type AmsReportEntity } from '../../../entities/agent_report_entity'
+import { useDispatch, useSelector } from 'react-redux'
+import type { RootState } from '../../../store'
+import { increment } from '../reportCreatorSlice'
 
 function UploadFormPage() {
+  const count = useSelector((state: RootState) => state.reportCreator.value)
+  const dispatch = useDispatch()
 
   const [dailyFYC, setDailyFYC] = useState<DailyFYCData | null>(null)
   const [dailyFYCLife, setDailyFYCLife] = useState<DailyFYCData | null>(null)

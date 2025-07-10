@@ -5,14 +5,18 @@ import { BrowserRouter, Route, Routes } from "react-router";
 // import App from './App.tsx'
 import { MainPage } from './pages'
 import UploadFormPage from './modules/report_creator/pages/UploadFormPage'
+import { store } from './store'
+import { Provider } from 'react-redux'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/form-report" element={<UploadFormPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/form-report" element={<UploadFormPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </StrictMode>,
 )
