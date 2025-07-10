@@ -7,6 +7,8 @@ import { MainPage } from './pages'
 import UploadFormPage from './modules/report_creator/pages/UploadFormPage'
 import { store } from './store'
 import { Provider } from 'react-redux'
+import { FactFindingFormPage } from './modules/factFinding/pages/FactFindingFormPage';
+import { FactFindingStartPage } from './modules/factFinding/pages/FactFindingStartPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -15,6 +17,8 @@ createRoot(document.getElementById('root')!).render(
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/form-report" element={<UploadFormPage />} />
+          <Route path="/fact-finding" element={<FactFindingStartPage />} />
+          <Route path="/fact-finding/form" element={<FactFindingFormPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

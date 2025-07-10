@@ -62,7 +62,7 @@ function MainPage() {
           </div>
 
           {/* CTA Button */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex flex-col items-center">
             <NavLink
               to="/form-report"
               className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 no-underline"
@@ -77,9 +77,12 @@ function MainPage() {
               </p>
             </NavLink>
 
-            <p className="text-sm text-gray-500">
-              Get started in just a few clicks • No registration required
-            </p>
+            <NavLink
+              to="/fact-finding"
+              className="text-sm text-gray-500"
+            >
+              Or go to Fact Finding Form
+            </NavLink>
           </div>
         </div>
       </div>

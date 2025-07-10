@@ -1,6 +1,6 @@
 import type { AgentReportEntity } from "../../entities/agent_report_entity"
 import ContainerHeader from "../Labels/ContainerHeader"
-import Container from "../Layouts/Container"
+import Container from "../containers/Container"
 import { ReportHeader } from "./ReportHeader"
 
 const AgentReport = ({
