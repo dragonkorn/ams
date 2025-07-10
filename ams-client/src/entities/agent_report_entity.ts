@@ -1,3 +1,5 @@
+import { DateToSimpleFormat } from "../utils/constant"
+import type { MonthlyActiveType } from "./agent"
 import type { DailyCase } from "./daily_case"
 import type { DailyFYC, DailyFYCData } from "./daily_fyc"
 import type { DailyFYP } from "./daily_fyp"
@@ -19,10 +21,13 @@ export interface AgentReportEntity {
     fypLifeApproved: number,
     fycAll: number,
     fycLife: number,
-  }
+  },
+  monthlyActive?: MonthlyActiveType,
 }
 
-export interface amsReport {
+// AmsReportEntity is the entity for the Ams Report
+export interface AmsReportEntity {
+  asOfDate: string,
   agentReport: AgentReportEntity[],
 }
 
@@ -40,7 +45,7 @@ export const constructAgentReports = (
   dailyFYCLifeData: DailyFYCData,
   dailyFYP: DailyFYP[],
   dailyCase: DailyCase[],
-): AgentReportEntity[] => {
+): AmsReportEntity => {
   const dailyFYC = dailyFYCData.agents
   const dailyFYCLife = dailyFYCLifeData.agents
 
@@ -89,5 +94,10 @@ export const constructAgentReports = (
 
     reports.push(agentReport)
   }
-  return reports
+
+  const asOfDate = DateToSimpleFormat(new Date())
+  return {
+    asOfDate,
+    agentReport: reports,
+  }
 }

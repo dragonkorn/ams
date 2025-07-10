@@ -1,6 +1,7 @@
 import type { AgentReportEntity } from "../../entities/agent_report_entity"
 import ContainerHeader from "../Labels/ContainerHeader"
 import Container from "../Layouts/Container"
+import { ReportHeader } from "./ReportHeader"
 
 const AgentReport = ({
   agentReports,
@@ -23,39 +24,58 @@ const AgentReport = ({
         <table className="min-w-full bg-white border border-gray-300 shadow-sm rounded-lg">
           <thead className="bg-gray-50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+              <ReportHeader>
+                RT3 VP7
+              </ReportHeader>
+              <ReportHeader colSpan={4}>
+                YTD
+              </ReportHeader>
+              <ReportHeader colSpan={6}>
+                MTD
+              </ReportHeader>
+            </tr>
+            <tr>
+              <ReportHeader rowSpan={2}>
                 Agent
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
                 Case
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
                 FYP
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                FYC
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                FYC Life
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                Case Life Submitted
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                Case Life Approved
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                FYP Life Submitted
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
-                FYP Life Approved
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
+                FYC (ALL)
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
+                FYC (L)
+              </ReportHeader>
+              <ReportHeader colSpan={2}>
+                Case Life
+              </ReportHeader>
+              <ReportHeader colSpan={2}>
+                FYP Life
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
                 FYC All
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b">
+              </ReportHeader>
+              <ReportHeader rowSpan={2}>
                 FYC Life
-              </th>
+              </ReportHeader>
+            </tr>
+            <tr>
+              <ReportHeader>
+                Submitted
+              </ReportHeader>
+              <ReportHeader>
+                Approved
+              </ReportHeader>
+              <ReportHeader>
+                Submitted
+              </ReportHeader>
+              <ReportHeader>
+                Approved
+              </ReportHeader>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
@@ -70,61 +90,51 @@ const AgentReport = ({
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.yearToDate.case.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">YTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.yearToDate.fyp.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">YTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.yearToDate.fyc.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">YTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.yearToDate.fycLife.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">YTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.caseLifeSubmitted.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.caseLifeApproved.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.fypLifeSubmitted.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.fypLifeApproved.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.fycAll.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                   <div className="text-center">
                     <div className="font-medium">{agent.monthToDate.fycLife.toLocaleString()}</div>
-                    <div className="text-xs text-gray-500">MTD</div>
                   </div>
                 </td>
               </tr>

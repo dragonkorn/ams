@@ -1,14 +1,18 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import { BrowserRouter } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 // import App from './App.tsx'
 import { MainPage } from './pages'
+import UploadFormPage from './modules/report_creator/UploadFormPage'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <MainPage />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/form-report" element={<UploadFormPage />} />
+      </Routes>
     </BrowserRouter>
   </StrictMode>,
 )
