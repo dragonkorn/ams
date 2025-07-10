@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import {
   Container,
@@ -7,6 +9,8 @@ import {
   Button,
   InfoContainer,
 } from "../../../components";
+import { setFormData } from '../slices/factFindingSlice';
+import type { AppDispatch, RootState } from '../../../store';
 
 // Validation schema
 const FactFindingSchema = Yup.object().shape({
@@ -55,6 +59,10 @@ const FactFindingSchema = Yup.object().shape({
 });
 
 const Basic = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+  const { formData } = useSelector((state: RootState) => state.factFinding);
+
   useEffect(() => {
     document.addEventListener("keydown", function (event: any) {
       if (event.keyCode === 13 && event.target.nodeName === "INPUT") {
@@ -66,7 +74,34 @@ const Basic = () => {
     });
   }, [])
 
-  const initialValues = {
+  const initialValues = formData ? {
+    // Personal Information
+    clientName: formData.clientName || '',
+    clientAge: formData.clientAge || '',
+    clientOccupation: formData.clientOccupation || '',
+    clientMaritalStatus: formData.clientMaritalStatus || '',
+
+    // Financial Information
+    monthlyIncome: formData.monthlyIncome || '',
+    monthlyExpenses: formData.monthlyExpenses || '',
+    currentSavings: formData.currentSavings || '',
+    existingInsurance: formData.existingInsurance || '',
+
+    // Financial Goals
+    shortTermGoal: formData.shortTermGoal || '',
+    longTermGoal: formData.longTermGoal || '',
+    targetAmount: formData.targetAmount || '',
+    timeHorizon: formData.timeHorizon || '',
+
+    // Risk Profile
+    riskTolerance: formData.riskTolerance || '',
+    investmentExperience: formData.investmentExperience || '',
+
+    // Insurance Needs
+    familyDependents: formData.familyDependents || '',
+    healthCondition: formData.healthCondition || '',
+    existingMedicalConditions: formData.existingMedicalConditions || '',
+  } : {
     // Personal Information
     clientName: '',
     clientAge: '',
@@ -97,8 +132,9 @@ const Basic = () => {
 
   const handleSubmit = (values: any, { setSubmitting }: any) => {
     console.log('Form submitted:', values);
-    // Here you can send data to backend or navigate to next step
+    dispatch(setFormData(values));
     setSubmitting(false);
+    navigate('/fact-finding/report');
   };
 
   return (

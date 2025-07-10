@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import reportCreatorReducer from './modules/report_creator/reportCreatorSlice'
+import factFindingReducer from './modules/factFinding/slices/factFindingSlice'
 
 export const store = configureStore({
   reducer: {
     reportCreator: reportCreatorReducer,
+    factFinding: factFindingReducer,
   },
 })
 
